@@ -252,7 +252,7 @@ bin/
 portlets/opencps-portlet/.classpath
 portlets/LiferayJSONWebservices-portlet.rar
 portlets/LiferayJSONWebservices-portlet/
-
+theme/
 portlets/opencps-portlet/*.log
 build.binhth.properties
 build.trungdk.properties
