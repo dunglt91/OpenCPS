@@ -290,13 +290,7 @@
 						
 						<c:when test="<%=partType == PortletConstants.DOSSIER_PART_TYPE_MULTIPLE_RESULT %>">
 							<%
-									List<DossierPart> dossierParts6 = DossierMgtUtil.getTreeDossierPart(dossierPartLevel1.getDossierpartId());
-									for(DossierPart dossierPart : dossierParts6){
-										boolean isDynamicForm = false;
-										
-										if(Validator.isNotNull(dossierPart.getFormReport()) && Validator.isNotNull(dossierPart.getFormScript())){
-											isDynamicForm = true;
-										}
+									for(DossierPart dossierPart : dossierParts){
 										
 										//Toi uu thuat toan tim kiem sau
 										boolean hasProcecssOrderResult1 = true;
@@ -356,12 +350,6 @@
 																name="<%=DossierDisplayTerms.DOSSIER_ID %>" 
 																value="<%=String.valueOf(dossier != null ? dossier.getDossierId() : 0) %>"
 															/>
-															
-															<portlet:param 
-																name="isDynamicForm" 
-																value="<%=String.valueOf(isDynamicForm) %>"
-															/>
-															
 															<portlet:param 
 																name="<%=DossierFileDisplayTerms.DOSSIER_PART_ID %>" 
 																value="<%=String.valueOf(dossierPart.getDossierpartId()) %>"
