@@ -1,4 +1,5 @@
 
+<%@page import="org.opencps.datamgt.model.DictItem"%>
 <%
 /**
  * OpenCPS is the open source Core Public Services software
@@ -108,10 +109,10 @@
 			<aui:select name="dossierStatus">
 				<aui:option value="<%= StringPool.BLANK %>"></aui:option>
 				<%
-					for(String stt : PortletUtil.getDossierStatus()) {
+					for(DictItem stt : PortletUtil.getDossierStatus(scopeGroupId)) {
 						%>
-							<aui:option value="<%=stt %>">
-								<liferay-ui:message key="<%= PortletUtil.getActionInfoByKey(stt, themeDisplay.getLocale()) %>"/>
+							<aui:option value="<%=stt.getItemCode() %>">
+								<%=stt.getItemName(locale, true) %>
 							</aui:option>
 						<%
 					}
