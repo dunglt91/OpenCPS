@@ -126,7 +126,7 @@
 	/>
 	
 	<aui:row>
-		<aui:input 
+		<aui:input cssClass="input-displayname-sp" 
 			name="<%= DossierFileDisplayTerms.DISPLAY_NAME %>" 
 			type="text"
 		>

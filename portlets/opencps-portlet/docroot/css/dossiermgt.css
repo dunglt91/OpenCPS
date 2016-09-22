@@ -143,3 +143,6 @@ level-0 opencps dossiermgt dossier-part .row-icon {
 .row-icon-stt-new {
     width: 25px;
 }
+.portlet-boundary_13_WAR_opencpsportlet_ form > div:first-of-type input{
+	width:500px;
+}
