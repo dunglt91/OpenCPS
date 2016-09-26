@@ -157,7 +157,7 @@
     color: white;
 }
 
-.searchcontainer-content .readonly td input[type="checkbox"]{
+.searchcontainer-content .readonly td input{
     display: none !important;
 }
 
@@ -192,5 +192,5 @@
 
 .row-icon-stt-new {
     width: 40px;
-    text-align: right;
-}
+    text-align: right; 
+ }
