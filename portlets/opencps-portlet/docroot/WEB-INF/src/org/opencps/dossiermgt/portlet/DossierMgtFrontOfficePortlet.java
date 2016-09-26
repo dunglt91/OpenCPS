@@ -2243,6 +2243,7 @@ public class DossierMgtFrontOfficePortlet extends MVCPortlet {
 		}
 		finally {
 			if (Validator.isNotNull(redirectURL)) {
+				redirectURL = StringUtil.replace(redirectURL, "&_13_WAR_opencpsportlet_dossierStatus="+ dossierStatus, "&_13_WAR_opencpsportlet_dossierStatus=");
 				actionResponse.sendRedirect(redirectURL);
 			}
 		}
