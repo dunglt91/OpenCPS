@@ -315,7 +315,6 @@
 								itemNames="cityId,districtId,wardId"
 								itemsEmptyOption="true,true,true"
 								displayStyle="vertical"
-								emptyOptionLabels="cityId,districtId,wardId"
 								showLabel="true"
 								selectedItems="<%= StringUtil.merge(cdw, StringPool.COMMA) %>"
 							/>
