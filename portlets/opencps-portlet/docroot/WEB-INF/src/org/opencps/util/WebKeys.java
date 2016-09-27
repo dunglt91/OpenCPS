@@ -232,6 +232,7 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String JMS_QUEUE = "JMS_QUEUE";
 	public static final String ORDER_BY_ASC = "asc";
 	public static final String ORDER_BY_DESC = "desc";
+	public static final String ORDER_BY_DEFAULT = "default";
 	public static final String SERVICE_DOMAIN = "SERVICE_DOMAIN";
 	
 	

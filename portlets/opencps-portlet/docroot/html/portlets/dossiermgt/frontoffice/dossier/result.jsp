@@ -267,7 +267,8 @@
 					<liferay-ui:message key="dossier-file-result"/>
 				</label>
 				<c:choose>
-					<c:when test="<%= orderDossierFileByDossierFileDate.equals("default") %>">
+					<!-- Mac dinh -->
+					<c:when test="<%= orderDossierFileByDossierFileDate.equals(WebKeys.ORDER_BY_DEFAULT) %>">
 						<%
 							int count = 1;
 							for (DossierPart dossierPartLevel1 : dossierPartsLevel1){
@@ -355,9 +356,11 @@
 							}
 						%>
 					</c:when>
+					
+					<!-- Sap xep dossierFile theo dossierFileDate -->
 					<c:otherwise>
 						<%
-							//array lis
+							//array list
 							List<DossierFile> dossierFiles = new ArrayList<DossierFile>();
 							int count = 1;
 							for (DossierPart dossierPartLevel1 : dossierPartsLevel1){
@@ -445,8 +448,6 @@
 								<%
 								count ++;
 							}
-							
-						
 						%>	
 					</c:otherwise>
 				</c:choose>
