@@ -138,7 +138,7 @@
 
 	if (processStepId > 0) {
 		processStepDossierParts =
-	ProcessUtils.getDossierPartByStep(processStepId);
+			ProcessUtils.getDossierPartByStep(processStepId);
 	}
 	
 	//Get list DossierPart
@@ -370,7 +370,7 @@
 							</div>
 						    <%
 								List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.
-								getDossierFileByD_DP(dossier.getDossierId(), dossierPart.getDossierpartId());
+								getDossierFileByDID_DP(dossier.getDossierId(), dossierPart.getDossierpartId());
 								
 								if(dossierFiles != null){
 									for(DossierFile dossierFileOther : dossierFiles){

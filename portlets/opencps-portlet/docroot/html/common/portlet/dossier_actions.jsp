@@ -23,6 +23,9 @@
 <%@page import="org.opencps.dossiermgt.search.DossierFileDisplayTerms"%>
 <%@page import="org.opencps.dossiermgt.search.DossierDisplayTerms"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
+<%@page import="org.opencps.dossiermgt.search.DossierPartDisplayTerms"%>
+<%@page import="org.opencps.dossiermgt.service.DossierPartLocalServiceUtil"%>
+<%@page import="org.opencps.dossiermgt.model.DossierPart"%>
 
 <%@ include file="/init.jsp"%>
 
@@ -64,12 +67,12 @@
 	if(dossierId > 0 && dossierPartId > 0){
 		try{
 			if(isChildDossierPart && fileGroupId > 0){
-				version = DossierFileLocalServiceUtil.countDossierFile(dossierId, childDossierPartId, fileGroupId);
+				version = DossierFileLocalServiceUtil.countDossierFileByDID_DP_GF(dossierId, childDossierPartId, fileGroupId);
 			}else{
 				if(partType == PortletConstants.DOSSIER_PART_TYPE_OTHER || partType==PortletConstants.DOSSIER_PART_TYPE_MULTIPLE_RESULT){
 					version = 1;
 				}else{
-					version = DossierFileLocalServiceUtil.countDossierFile(dossierId, dossierPartId);
+					version = DossierFileLocalServiceUtil.countDossierFileByDID_DP(dossierId, dossierPartId);
 				}
 				
 			}
@@ -168,7 +171,7 @@
 					</c:choose>
 				</td>
 				
-				<td width="10%" align="right">
+				<td width="10%" align="right" >
 					<c:if test="<%=showVersionItemReference %>">
 						<span class="dossier-version-counter">
 							<span class="counter-value" title='<%=LanguageUtil.get(pageContext, "version") %>'>
@@ -271,7 +274,7 @@
 					</c:choose>
 				</td>
 				
-				<td width="10%" align="right">
+				<td width="10%" align="right" >
 					<c:if test="<%=showVersionItemReference %>">
 						<span class="dossier-version-counter">
 							<span class="counter-value" title='<%=LanguageUtil.get(pageContext, "version") %>'>
@@ -391,7 +394,7 @@
 					</c:choose>
 				</td>
 				
-				<td width="10%" align="right">
+				<td width="10%" align="right" >
 					<c:if test="<%=showVersionItemReference %>">
 						<span class="dossier-version-counter">
 							<span class="counter-value" title='<%=LanguageUtil.get(pageContext, "version") %>'>

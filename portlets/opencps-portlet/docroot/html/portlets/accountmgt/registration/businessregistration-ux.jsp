@@ -1,5 +1,3 @@
-
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%
 /**
  * OpenCPS is the open source Core Public Services software
@@ -159,9 +157,17 @@
 		message="<%= OutOfSizeFileUploadException.class.getName() %>" 
 	/>
 
+	<%
+		String ACCOUNT_UPDATE_CUCCESS = StringPool.BLANK;
+		if (Validator.isNotNull(messageSuccessfullRegistration)){
+			ACCOUNT_UPDATE_CUCCESS = messageSuccessfullRegistration;
+		} else {
+			ACCOUNT_UPDATE_CUCCESS = MessageKeys.ACCOUNT_UPDATE_CUCCESS;
+		}
+	%>
 	<liferay-ui:success 
 		key="<%=MessageKeys.ACCOUNT_UPDATE_CUCCESS %>" 
-		message="<%=messageSuccessfullRegistration %>"
+		message="<%=ACCOUNT_UPDATE_CUCCESS %>"
 	/>
 	
 	<portlet:actionURL var="updateBusinessURL" name="updateBusiness">
@@ -182,6 +188,8 @@
 		<aui:model-context bean="<%=businessValidate%>" model="<%=Business.class%>" />
 		
 		<aui:input name="businessRegStep_cfg" value="<%=businessRegStep_cfg %>" type="hidden"></aui:input>
+		
+		<aui:input name="emailConfirmToAdmin" value="<%=emailConfirmToAdmin %>" type="hidden"></aui:input>
 		
 		<div class="register-content">
 			<div class="opencps accountmgt fm-registration header">
@@ -317,7 +325,7 @@
 						<c:when test="<%=!showLabelTaglibDatamgt %>">
 							<datamgt:ddr 
 								cssClass="input100"
-								depthLevel="3" 
+								depthLevel="<%=WebKeys.DEPTH_LEVEL_3 %>" 
 								dictCollectionCode="ADMINISTRATIVE_REGION"
 								itemNames="cityId,districtId,wardId"
 								itemsEmptyOption="true,true,true"	
@@ -330,7 +338,7 @@
 						<c:otherwise>
 							<datamgt:ddr 
 								cssClass="input100"
-								depthLevel="3" 
+								depthLevel="<%=WebKeys.DEPTH_LEVEL_3 %>" 
 								dictCollectionCode="ADMINISTRATIVE_REGION"
 								itemNames="cityId,districtId,wardId"
 								itemsEmptyOption="true,true,true"	
@@ -347,7 +355,7 @@
 						<c:when test="<%=!showLabelTaglibDatamgt %>">
 							<datamgt:ddr
 								cssClass="input100"
-								depthLevel="1" 
+								depthLevel="<%=WebKeys.DEPTH_LEVEL_1 %>" 
 								dictCollectionCode="<%=PortletPropsValues.DATAMGT_MASTERDATA_BUSINESS_TYPE %>"
 								itemNames="businessType"
 								itemsEmptyOption="true"	
@@ -359,7 +367,7 @@
 						<c:otherwise>
 							<datamgt:ddr
 								cssClass="input100"
-								depthLevel="1" 
+								depthLevel="<%=WebKeys.DEPTH_LEVEL_1 %>" 
 								dictCollectionCode="<%=PortletPropsValues.DATAMGT_MASTERDATA_BUSINESS_TYPE %>"
 								itemNames="businessType"
 								itemsEmptyOption="true"	

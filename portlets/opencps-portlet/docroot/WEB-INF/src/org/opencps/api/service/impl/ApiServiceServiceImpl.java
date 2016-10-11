@@ -366,14 +366,16 @@ public class ApiServiceServiceImpl extends ApiServiceServiceBaseImpl {
 				} else if (dossierFileContent.equals("") || dossierFileContent.equals("{}")) {
 					byte[] bytes = getFileFromURL(dossierFileURL);
 					
-					String extension = FileUtil.getExtension(dossierFileName);
+					String sourceFileName = dossierFileName;
+					
+					String extension = FileUtil.getExtension(sourceFileName);
 					
 					if(Validator.isNull(extension)) {
 						extension = StringUtil.replace(FileUtil.getExtension(dossierFileURL), 
 							StringPool.FORWARD_SLASH, StringPool.BLANK);
 						
 						if(Validator.isNotNull(extension)) {
-							dossierFileName = dossierFileName.concat(StringPool.UNDERLINE)
+							sourceFileName = dossierFileName.concat(StringPool.UNDERLINE)
 									.concat(String.valueOf(System.nanoTime()))
 									.concat(StringPool.PERIOD).concat(extension);
 						}
@@ -383,12 +385,10 @@ public class ApiServiceServiceImpl extends ApiServiceServiceBaseImpl {
 					
 					serviceContext.setUserId(dossier.getUserId());
 					
-					DLFolder dossierFolder = DLFolderUtil
-							.getDossierFolder(
-									serviceContext.getScopeGroupId(),
-									dossier.getUserId(),
-									dossier.getCounter(),
-									serviceContext);
+					DLFolder dossierFolder = DLFolderUtil.getDossierFolder(
+							serviceContext.getScopeGroupId(),
+							null, dossier.getOid(),
+							serviceContext);
 					
 					dossierFileLocalService
 							.addDossierFile(
@@ -410,7 +410,7 @@ public class ApiServiceServiceImpl extends ApiServiceServiceBaseImpl {
 									1,
 									PortletConstants.DOSSIER_FILE_SYNC_STATUS_SYNCSUCCESS,
 									dossierFolder.getFolderId(),
-									dossierFileName, mimeType, dossierFileName,
+									sourceFileName, mimeType, dossierFileName,
 									StringPool.BLANK, StringPool.BLANK,
 									bytes, serviceContext);
 				}
@@ -444,14 +444,16 @@ public class ApiServiceServiceImpl extends ApiServiceServiceBaseImpl {
 				} else {
 					byte[] bytes = getFileFromURL(dossierFileURL);
 					
-					String extension = FileUtil.getExtension(dossierFileName);
+					String sourceFileName = dossierFileName;
+					
+					String extension = FileUtil.getExtension(sourceFileName);
 					
 					if(Validator.isNull(extension)) {
 						extension = StringUtil.replace(FileUtil.getExtension(dossierFileURL), 
 							StringPool.FORWARD_SLASH, StringPool.BLANK);
 						
 						if(Validator.isNotNull(extension)) {
-							dossierFileName = dossierFileName.concat(StringPool.UNDERLINE)
+							sourceFileName = dossierFileName.concat(StringPool.UNDERLINE)
 									.concat(String.valueOf(System.nanoTime()))
 									.concat(StringPool.PERIOD).concat(extension);
 						}
@@ -465,7 +467,7 @@ public class ApiServiceServiceImpl extends ApiServiceServiceBaseImpl {
 
 					DLFolder dossierFolder = DLFolderUtil.getDossierFolder(
 							serviceContext.getScopeGroupId(),
-							dossier.getUserId(), dossier.getCounter(),
+							null, dossier.getOid(),
 							serviceContext);
 					
 					dossierPart = dossierPartLocalService
@@ -489,9 +491,9 @@ public class ApiServiceServiceImpl extends ApiServiceServiceBaseImpl {
 									dossierFileNo,
 									new Date(),
 									1,
-									PortletConstants.DOSSIER_FILE_SYNC_STATUS_SYNCSUCCESS,
+									PortletConstants.DOSSIER_FILE_SYNC_STATUS_NOSYNC,
 									dossierFolder.getFolderId(),
-									dossierFileName, mimeType, dossierFileName,
+									sourceFileName, mimeType, dossierFileName,
 									StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 				}
 			}
@@ -614,6 +616,8 @@ public class ApiServiceServiceImpl extends ApiServiceServiceBaseImpl {
 					.getReceptionNo()) ? dossier.getReceptionNo()
 					: StringPool.BLANK);
 			sendToEngineMsg.setSignature(0);
+			sendToEngineMsg.setDossierStatus(dossier.getDossierStatus());
+			
 			if (Validator.isNotNull(processWorkflow.getAutoEvent())) {
 				sendToEngineMsg.setEvent(processWorkflow.getAutoEvent());
 			}

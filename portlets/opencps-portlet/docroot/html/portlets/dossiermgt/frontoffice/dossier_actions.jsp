@@ -53,7 +53,10 @@
 	
 	try {
 		ProcessOrder processOrder = ProcessOrderLocalServiceUtil.getProcessOrder(dossier.getDossierId(), 0);
-		workFlow = ProcessWorkflowLocalServiceUtil.getByS_PreP_AN(processOrder.getServiceProcessId(), processOrder.getProcessStepId(), PortletPropsValues.OPENCPS_CANCEL_DOSSIER_NOTICE);
+		
+		if(processOrder != null) {
+			workFlow = ProcessWorkflowLocalServiceUtil.getProcessWorkflowByEvent(processOrder.getServiceProcessId(), WebKeys.PRE_CONDITION_CANCEL, processOrder.getProcessStepId());
+		}
 	}
 	catch (Exception e) {
 		
@@ -69,12 +72,28 @@
 		<portlet:param name="isEditDossier" value="<%=String.valueOf(false) %>"/>
 		<portlet:param name="redirectURL" value="<%=currentURL %>"/>
 	</portlet:renderURL> 
-	<liferay-ui:icon 
-		cssClass="search-container-action fa view" 
-		image="view" 
-		message="view" 
-		url="<%=viewDossierURL.toString() %>" 
-	/>
+	<c:choose>
+		<c:when test="<%=showTabDossierResultFirst %>">
+			<%
+				String viewResultDossierURL = viewDossierURL.toString() + "#" +renderResponse.getNamespace() +"tab="+ renderResponse.getNamespace() + "result";
+			%> 
+			<liferay-ui:icon 
+				cssClass="search-container-action fa view" 
+				image="view" 
+				message="view" 
+				url="<%=viewResultDossierURL.toString()%>" 
+			/>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:icon 
+				cssClass="search-container-action fa view" 
+				image="view" 
+				message="view" 
+				url="<%=viewDossierURL.toString() %>" 
+			/>
+		</c:otherwise>
+	</c:choose>
+	
  	<c:choose>
  		<c:when test="<%=dossier.getDossierStatus().equals(PortletConstants.DOSSIER_STATUS_NEW) || 
  			dossier.getDossierStatus().equals(PortletConstants.DOSSIER_STATUS_WAITING)%>">
@@ -83,6 +102,7 @@
 					<portlet:param name="mvcPath" value='<%=templatePath + "edit_dossier.jsp" %>'/>
 					<portlet:param name="<%=DossierDisplayTerms.DOSSIER_ID %>" value="<%=String.valueOf(dossier.getDossierId()) %>"/>
 					<portlet:param name="redirectURL" value="<%=currentURL %>"/>
+					<portlet:param name="backURL" value="<%=currentURL %>"/>
 					<portlet:param name="isEditDossier" value="<%=String.valueOf(true) %>"/>
 				</portlet:renderURL> 
 		 		<liferay-ui:icon 
