@@ -43,5 +43,9 @@
 	boolean showVersionItem = GetterUtil.getBoolean(preferences.getValue("showVersionItem", "true"), true);
 	
 	boolean showBackToListButton = GetterUtil.getBoolean(preferences.getValue("showBackToListButton", "true"), true);
+	
+	boolean showServiceDomainIdTree = GetterUtil.getBoolean(preferences.getValue("showServiceDomainIdTree", "true"), true);
+	
+	boolean hideTabDossierFile = GetterUtil.getBoolean(preferences.getValue("hideTabDossierFile", "false"), false);
 %>
 

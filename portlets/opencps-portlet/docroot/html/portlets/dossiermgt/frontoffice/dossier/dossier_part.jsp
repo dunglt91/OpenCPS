@@ -87,6 +87,7 @@
 	boolean isEditDossier = ParamUtil.getBoolean(request, "isEditDossier");
 	
 	String cssRequired = StringPool.BLANK;
+	String cssDossierPartRequired = StringPool.BLANK;
 	
 	String urlDownload = StringPool.BLANK;
 	
@@ -170,10 +171,16 @@
 								
 								cssRequired = dossierPart.getRequired() ? "cssRequired" : StringPool.BLANK;
 								
+								if(dossierPart.getRequired() && dossierFile == null) {
+									cssDossierPartRequired = "dossierPartRequired";
+								} else {
+									cssDossierPartRequired = StringPool.BLANK;
+								}
+								
 								urlDownload = DossierMgtUtil.getURLDownloadTemplateFile(themeDisplay, dossierPart.getTemplateFileNo());
 								
 								%>
-									<div class='<%="opencps dossiermgt dossier-part-row r-" + index%>'>
+									<div class='<%="opencps dossiermgt dossier-part-row r-" + index + " " + cssDossierPartRequired%>'>
 										<span class='<%="level-" + level + " opencps dossiermgt dossier-part"%>'>
 											<span class="row-icon row-icon-stt-new">
 												<c:choose>
@@ -265,7 +272,7 @@
 							<c:if test="<%=partType == PortletConstants.DOSSIER_PART_TYPE_OTHER && dossier != null%>">
 								<%
 									List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.
-										getDossierFileByD_DP(dossier.getDossierId(), dossierPartLevel1.getDossierpartId());
+										getDossierFileByDID_DP_R(dossier.getDossierId(), dossierPartLevel1.getDossierpartId(), 0);
 								
 									if(dossierFiles != null){
 										for(DossierFile dossierFileOther : dossierFiles){
@@ -348,10 +355,17 @@
 								
 								cssRequired = dossierPartLevel1.getRequired() ? "cssRequired" : StringPool.BLANK;
 								
+								//TODO: kiem tra lai dieu kien dossierPartRequired voi truong hop nay
+								if(dossierPartLevel1.getRequired() && (fileGroups == null || (fileGroups != null && fileGroups.size() > 0))) {
+									cssDossierPartRequired = "dossierPartRequired";
+								} else {
+									cssDossierPartRequired = StringPool.BLANK;
+								}
+								
 								urlDownload = DossierMgtUtil.getURLDownloadTemplateFile(themeDisplay, dossierPartLevel1.getTemplateFileNo());
 								
 							%>
-							<div class='<%="opencps dossiermgt dossier-part-row r-" + index%>'>
+							<div class='<%="opencps dossiermgt dossier-part-row r-" + index + " " + cssDossierPartRequired %>'>
 								<span class='<%="level-0" + " opencps dossiermgt dossier-part"%>'>
 									<span class="row-icon">
 										<i class="fa fa-circle" aria-hidden="true"></i>

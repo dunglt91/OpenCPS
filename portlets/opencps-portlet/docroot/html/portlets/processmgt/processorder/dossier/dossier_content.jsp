@@ -111,7 +111,7 @@
 								if(dossier != null){
 									try{
 										dossierFile = DossierFileLocalServiceUtil.getDossierFileInUse(dossier.getDossierId(), 
-												dossierPart.getDossierpartId());
+                                            dossierPart.getDossierpartId(), PortletConstants.DOSSIER_FILE_SYNC_STATUS_SYNCSUCCESS);
 										if(dossierFile.getFormData().length() > 0){
 											isOnlineData = 1;
 										}else{
@@ -210,8 +210,8 @@
 							
 							<c:if test="<%=partType == PortletConstants.DOSSIER_PART_TYPE_OTHER && dossier != null%>">
 								<%
-									List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.
-										getDossierFileByD_DP(dossier.getDossierId(), dossierPartLevel1.getDossierpartId());
+								List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.
+									getDossierFileByDID_SS_DPID_R(dossier.getDossierId(), PortletConstants.DOSSIER_FILE_SYNC_STATUS_SYNCSUCCESS, dossierPartLevel1.getDossierpartId(), 0);
 								
 									if(dossierFiles != null){
 										for(DossierFile dossierFileOther : dossierFiles){

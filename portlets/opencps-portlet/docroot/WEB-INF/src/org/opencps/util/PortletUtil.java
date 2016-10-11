@@ -34,7 +34,6 @@ import javax.portlet.ResourceRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.opencps.datamgt.NoSuchDictCollectionException;
 import org.opencps.datamgt.model.AdministrationServicedomain;
 import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
@@ -742,8 +741,9 @@ public class PortletUtil {
 			break;
 		case PaymentMgtUtil.PAYMENT_STATUS_REJECTED:
 			statusLabel = LanguageUtil.get(locale, "rejected");
+			break;
 		default:
-			statusLabel = LanguageUtil.get(locale, "requested");
+			statusLabel = LanguageUtil.get(locale, "on-processing");
 			break;
 		}
 
@@ -955,7 +955,6 @@ public class PortletUtil {
 	public static String getDossierProcessStateLabel(Dossier dossier, Locale locale) {
 
 		String statusLabel = StringPool.BLANK;
-
 		if (Validator.isNotNull(dossier.getFinishDatetime()) && Validator.isNotNull(dossier.getEstimateDatetime())) {
 			if (dossier.getFinishDatetime().after(dossier.getEstimateDatetime())) {
 				statusLabel = LanguageUtil.get(locale, "status-late");
@@ -977,9 +976,16 @@ public class PortletUtil {
 				else if (dossier.getEstimateDatetime().after(now)) {
 					statusLabel = LanguageUtil.get(locale, "status-toolate");
 				}
+			}else{
+				if (Validator.isNull(dossier.getEstimateDatetime()) && Validator.isNotNull(dossier.getFinishDatetime())) {
+					statusLabel = LanguageUtil.get(locale, "status-ontime");
+				}else{
+					if (Validator.isNull(dossier.getEstimateDatetime()) && Validator.isNull(dossier.getFinishDatetime())) {
+						statusLabel = LanguageUtil.get(locale, "status-toosoon");
+					}
+				}
 			}
 		}			
-
 		return statusLabel;
 	}
 	
